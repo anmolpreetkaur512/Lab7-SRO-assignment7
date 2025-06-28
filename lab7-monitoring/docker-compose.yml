@@ -5,8 +5,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus:/etc/prometheus/
-      - prometheus_data:/prometheus
+      - ./prometheus:/etc/prometheus/ # <--- CRITICAL CHANGE: Mounts the whole directory
+      - prometheus_data:/prometheus   # For persistent data storage
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -27,7 +27,6 @@ services:
     container_name: node-exporter
     ports:
       - "9100:9100"
-
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
     container_name: elasticsearch
